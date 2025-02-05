@@ -1,1 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center mb-4">Resultados de Transformación</h1>
+
+<!-- Imagen Original -->
+<h3 class="text-center">Imagen Original</h3>
+<div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <img src="/static/{{ transformations['Imagen Original'] }}" class="card-img-top" alt="Imagen Original">
+            <div class="card-body">
+                <p class="card-text text-center">Esta es la imagen original antes de aplicar cualquier transformación.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resultados de las transformaciones -->
+<h3 class="text-center">Transformaciones Aplicadas</h3>
+<div class="row">
+    {% for name, path in transformations.items() %}
+        {% if name != 'Imagen Original' %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="/static/{{ path }}" class="card-img-top" alt="{{ name }}">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ name }}</h5>
+                    <p class="card-text text-center">
+                        {% if name == "Binarización" %}
+                            La imagen fue convertida a escala de grises y binarizada con un umbral de 128.
+                        {% elif name == "Rotación" %}
+                            La imagen fue rotada 45 grados en sentido horario.
+                        {% elif name == "Traslación" %}
+                            La imagen fue trasladada 50 píxeles en las direcciones X e Y.
+                        {% elif name == "Escalado" %}
+                            La imagen fue escalada con un factor de 1.5x, aumentando su tamaño.
+                        {% elif name == "Cizallamiento" %}
+                            Se aplicó un cizallamiento (shear) para deformar la imagen en los ejes X e Y.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<a href="/" class="btn btn-secondary">Procesar otra imagen</a>
+{% endblock %}
 
